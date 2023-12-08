@@ -6,28 +6,23 @@ using namespace std;
 
 int main() {
 
-    std::ifstream inputFile("tinput.txt");
+    std::ifstream inputFile("input.txt");
 
-    // Check if the file is open
     if (!inputFile.is_open()) {
         std::cerr << "Error opening the file!" << std::endl;
-        return 1; // Return an error code
+        return 1; 
     }
 
-    int y = 0;
+    int sum = 0;
 
-    // Read the file line by line
     std::string line;
+
     while (std::getline(inputFile, line)) {
-
-        cout << line << endl;
-
-        string s;
 
         string digits[9] = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
 
-        int end = -1;
-        int start = line.length();
+        int endIndex = -1;
+        int startIndex = line.length();
 
         int endDigit;
         int startDigit;
@@ -36,55 +31,42 @@ int main() {
             int first = line.find(digits[i]);
             int last = line.rfind(digits[i]);
 
-            if (first != string::npos && first < start) {
-                start = first;
+            if (first != string::npos && first < startIndex) {
+                startIndex = first;
                 startDigit = i + 1;
             }
 
-            if (last != string::npos && last > end) {
-                end = last;
+            if (last != string::npos && last > endIndex) {
+                endIndex = last;
                 endDigit = i + 1;
             }
         }
 
-        cout << start << " " << startDigit << " " << end << " " << endDigit;
+        size_t first = line.find_first_of("123456789");
+        size_t last = line.find_last_of("123456789");
 
-        string strStart = digits[startDigit - 1];
-        if (start != line.length()) {
-            line.replace(start, strStart.length(), to_string(startDigit));
-            end -= strStart.length() - 1;
+        string c;
+
+        if (startIndex < (int) first) {
+            c = to_string(startDigit);
+        } else {
+            c = line[first];
         }
 
-        string strEnd = digits[endDigit - 1];
-        if (end >= 0 && line[end] == strEnd[0]) line.replace(end, strEnd.length(), to_string(endDigit)); 
-
-        int k = line.length();
-
-        for (int i = 0; i < k; ++i) {
-            if (isdigit(line[i])) {
-                s = line[i];               
-                break;
-            }
-        }
-        
-        for (int i = k - 1; i >= 0; --i) {
-            if (isdigit(line[i])) {
-                s += line[i];             
-                break;
-            }
+        if (endIndex > (int) last) {
+            c += to_string(endDigit);
+        } else {
+            c += line[last];
         }
 
-        int x = stoi(s);
+        int x = stoi(c);
 
-        cout << x << endl;
-
-        y += x;
+        sum += x;
     }
 
-    // Close the file
     inputFile.close();
 
-    cout << y << endl;
+    cout << sum << endl;
 
-    return 0; // Return 0 to indicate success
+    return 0;
 }
