@@ -36,8 +36,6 @@ int main() {
 
         int x = stoi(c);
 
-        cout << x << endl;
-
         sum += x;
     }
 
