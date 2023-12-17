@@ -35,9 +35,9 @@ int main(int argc, char *argv[]) {
 
             color.pop_back();
 
-            if (color == "red" && num > 12 ||
-                color == "blue" && num > 14 ||
-                color == "green" && num > 13) {
+            if (color[0] == 'r' && num > 12 ||
+                color[0] == 'g' && num > 13 ||
+                color[0] == 'b' && num > 14) {
                 flag = false;
                 break;
             }
